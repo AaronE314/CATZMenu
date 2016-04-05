@@ -1,4 +1,4 @@
-package com.example.tylergreen.map;
+package menu.catz.aaron.catzmenu;
 
 import android.Manifest;
 import android.app.AlertDialog;
