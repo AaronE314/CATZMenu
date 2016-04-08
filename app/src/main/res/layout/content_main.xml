@@ -11,6 +11,5 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="menu.catz.aaron.catzmenu.MainActivity"
     tools:showIn="@layout/app_bar_main">
-
     <include layout="@layout/activity_maps" />
 </RelativeLayout>

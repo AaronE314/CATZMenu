@@ -1,4 +1,4 @@
-package com.example.tylergreen.map;
+package menu.catz.aaron.catzmenu;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -13,12 +13,16 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 public class GPSTracker extends Service implements LocationListener {
 
     private final Context context;
+    private final MapsActivity map;
     Boolean isGPSEnables = false;
     Boolean isNetworkEnabled = false;
     Boolean canGetLocation = false;
@@ -27,9 +31,13 @@ public class GPSTracker extends Service implements LocationListener {
     private static long MIN_TIME_BW_UPDATES = 5000;
     protected LocationManager locationManager;
 
-    GPSTracker(Context context) {
-        this.context = context;
+    GPSTracker(Context _CONTEXT, MapsActivity _MAP) {
+        System.err.println("*******************************************************************************************************************************");
+        this.context = _CONTEXT;
+        map = _MAP;
         getLocation();
+        map.mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Hello"));
+        map.mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
     }
 
     public Location getLocation() {
@@ -98,21 +106,8 @@ public class GPSTracker extends Service implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        if (isGPSEnables || isNetworkEnabled) {
-            if (isNetworkEnabled) {
-                if (locationManager != null) {
-                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {}
-                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                }
-            }
-            if (isGPSEnables) {
-                if (location == null) {
-                    if (locationManager != null) {
-                        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    }
-                }
-            }
-        }
+        map.mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Marker in Sydney"));
+        map.mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
     }
 
     @Override
@@ -130,7 +125,6 @@ public class GPSTracker extends Service implements LocationListener {
 
     }
 
-    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         return null;
