@@ -19,6 +19,7 @@ import android.support.v4.app.ActivityCompat;
 public class GPSTracker extends Service implements LocationListener {
 
     private final Context context;
+    private final MapsActivity map;
     Boolean isGPSEnables = false;
     Boolean isNetworkEnabled = false;
     Boolean canGetLocation = false;
@@ -27,8 +28,11 @@ public class GPSTracker extends Service implements LocationListener {
     private static long MIN_TIME_BW_UPDATES = 5000;
     protected LocationManager locationManager;
 
-    GPSTracker(Context context) {
-        this.context = context;
+    GPSTracker(Context _CONTEXT, MapsActivity _MAP) {
+        this.context = _CONTEXT;
+        this.map = _MAP;
+        try { locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);}
+        catch (Exception e) {showSettingsAlert();}
         getLocation();
     }
 
@@ -98,21 +102,20 @@ public class GPSTracker extends Service implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        if (isGPSEnables || isNetworkEnabled) {
-            if (isNetworkEnabled) {
-                if (locationManager != null) {
-                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {}
-                    location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                }
+        if (isNetworkEnabled) {
+            if (locationManager != null) {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
             }
-            if (isGPSEnables) {
-                if (location == null) {
-                    if (locationManager != null) {
-                        location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                    }
+            }
+        } else if (isGPSEnables) {
+            if (locationManager != null) {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                 }
             }
         }
+        this.map.update();
     }
 
     @Override
@@ -134,10 +137,6 @@ public class GPSTracker extends Service implements LocationListener {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
-    }
-
-    public Location update() {
-        return location;
     }
 }
 
