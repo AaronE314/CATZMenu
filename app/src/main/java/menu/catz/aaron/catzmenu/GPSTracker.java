@@ -138,5 +138,9 @@ public class GPSTracker extends Service implements LocationListener {
     public IBinder onBind(Intent intent) {
         return null;
     }
+
+    public Location update() {
+        return location;
+    }
 }
 

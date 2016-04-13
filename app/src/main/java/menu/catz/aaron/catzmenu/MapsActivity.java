@@ -2,6 +2,7 @@ package menu.catz.aaron.catzmenu;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -20,7 +21,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        System.out.println("HIII: Map is ready");
     }
     private void attempt() {
         mMap.addMarker(new MarkerOptions().position(new LatLng(gps.location.getLatitude(), gps.location.getLongitude())));
