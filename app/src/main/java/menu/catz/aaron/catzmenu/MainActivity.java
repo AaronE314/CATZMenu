@@ -3,6 +3,8 @@ package menu.catz.aaron.catzmenu;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -39,6 +41,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
@@ -47,9 +54,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
 
@@ -59,19 +63,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+        //https://github.com/codepath/android_guides/wiki/Fragment-Navigation-Drawer
+        Fragment fragment = null;
+        Class fragmentClass = null;
         int id = item.getItemId();
-
-        if (id == R.id.nav_map) {
-
-        } else if (id == R.id.nav_shop) {
-
-        } else if (id == R.id.nav_upgrades) {
-
-        } else if (id == R.id.nav_options) {
-
+        switch (id){
+            case R.id.nav_map:
+                fragmentClass = MapsActivity.class;
+                break;
+            case R.id.nav_shop:
+                fragmentClass = ShopActivity.class;
+                break;
+            case R.id.nav_upgrades:
+                break;
+            case R.id.nav_options:
+                break;
+            default:
+                fragmentClass = MapsActivity.class;
+                break;
+        }
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e){
+            e.printStackTrace();
         }
 
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+        item.setChecked(true);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
