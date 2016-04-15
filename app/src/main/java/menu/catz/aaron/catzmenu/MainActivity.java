@@ -1,11 +1,7 @@
 package menu.catz.aaron.catzmenu;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.Fragment;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -64,33 +60,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         //https://github.com/codepath/android_guides/wiki/Fragment-Navigation-Drawer
-        Fragment fragment = null;
-        Class fragmentClass = null;
+        //http://stackoverflow.com/questions/19442378/navigation-drawer-to-switch-activities-instead-of-fragments
+        Class _CLASS = null;
         int id = item.getItemId();
         switch (id){
             case R.id.nav_map:
-                fragmentClass = MapsActivity.class;
+                _CLASS = MapsActivity.class;
                 break;
             case R.id.nav_shop:
-                fragmentClass = ShopActivity.class;
+                _CLASS = ShopActivity.class;
                 break;
             case R.id.nav_upgrades:
                 break;
             case R.id.nav_options:
                 break;
             default:
-                fragmentClass = MapsActivity.class;
+                _CLASS = MapsActivity.class;
                 break;
         }
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
+        startActivity(new Intent(getApplicationContext(), _CLASS));
+//        try {
+//            fragment = (Fragment) fragmentClass.newInstance();
+//        } catch (Exception e){
+//            e.printStackTrace();
+//        }
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
-        item.setChecked(true);
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+//        item.setChecked(true);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
