@@ -42,7 +42,9 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps" />
-        <activity android:name=".ShopActivity"></activity>
+        <activity android:name=".ShopActivity" />
+        <activity android:name=".UpgradeActivity" />
+        <activity android:name=".OptionsActivity"></activity>
     </application>
 
 </manifest>
