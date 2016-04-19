@@ -31,8 +31,6 @@ public class GPSTracker extends Service implements LocationListener {
     GPSTracker(Context _CONTEXT, MapsActivity _MAP) {
         this.context = _CONTEXT;
         this.map = _MAP;
-        try { locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);}
-        catch (Exception e) {showSettingsAlert();}
         getLocation();
     }
 
