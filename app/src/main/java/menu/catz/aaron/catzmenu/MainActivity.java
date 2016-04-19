@@ -2,11 +2,6 @@ package menu.catz.aaron.catzmenu;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.Fragment;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -29,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        startActivity(new Intent(this,MapsActivity.class));
     }
 
     @Override
@@ -66,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         //https://github.com/codepath/android_guides/wiki/Fragment-Navigation-Drawer
         //http://stackoverflow.com/questions/19442378/navigation-drawer-to-switch-activities-instead-of-fragments
+        //http://stackoverflow.com/questions/22467516/navigation-drawer-to-switch-between-activities
         Class _CLASS = null;
         int id = item.getItemId();
         switch (id){
@@ -76,23 +73,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 _CLASS = ShopActivity.class;
                 break;
             case R.id.nav_upgrades:
+                _CLASS = UpgradeActivity.class;
                 break;
             case R.id.nav_options:
+                _CLASS = OptionsActivity.class;
                 break;
             default:
                 _CLASS = MapsActivity.class;
                 break;
         }
-        startActivity(new Intent(getApplicationContext(), _CLASS));
-//        try {
-//            fragment = (Fragment) fragmentClass.newInstance();
-//        } catch (Exception e){
-//            e.printStackTrace();
-//        }
+        startActivity(new Intent(this, _CLASS));//getApplicationContext()
 
-//        FragmentManager fragmentManager = getSupportFragmentManager();
-//        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
-//        item.setChecked(true);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
