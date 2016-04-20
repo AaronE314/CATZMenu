@@ -13,7 +13,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     public GoogleMap mMap;
-    GPSTracker gps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +21,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
-    private void attempt() {
+    /*private void attempt() {
         mMap.addMarker(new MarkerOptions().position(new LatLng(gps.location.getLatitude(), gps.location.getLongitude())));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(gps.location.getLatitude(), gps.location.getLongitude())));
     }
@@ -30,13 +29,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.clear();
         mMap.addMarker(new MarkerOptions().position(new LatLng(gps.location.getLatitude(), gps.location.getLongitude())));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(gps.location.getLatitude(), gps.location.getLongitude())));
-    }
+    }*/
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        gps = new GPSTracker(this, this);
-        attempt();
+        //attempt();
     }
 }

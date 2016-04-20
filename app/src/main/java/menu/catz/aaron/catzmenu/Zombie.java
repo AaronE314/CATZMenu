@@ -2,11 +2,11 @@ package menu.catz.aaron.catzmenu;
 
 import com.google.android.gms.maps.model.LatLng;
 
-public class Zombies {
+public class Zombie {
     LatLng pos;
     int Health, Damage, Defence, Atck, Def;
     double Lat, Long, spdLat, spdLong, spdMax= 1;
-    Zombies (String type) {
+    Zombie(String type) {
         //TODO create a call to pull data from json
         //TODO can be online can be a local file
     }
