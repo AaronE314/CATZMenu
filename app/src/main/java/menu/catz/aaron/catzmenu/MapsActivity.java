@@ -1,5 +1,6 @@
 package menu.catz.aaron.catzmenu;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -21,15 +22,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_maps);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        //startActivity(new Intent(getApplicationContext(),DrawerActivity.class));
     }
     private void attempt() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(gps.location.getLatitude(), gps.location.getLongitude())));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(gps.location.getLatitude(), gps.location.getLongitude())));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(/*gps.location.getLatitude(), gps.location.getLongitude()*/10,10)));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(/*gps.location.getLatitude(), gps.location.getLongitude()*/10,10)));
     }
     public void update() {
         mMap.clear();
-        mMap.addMarker(new MarkerOptions().position(new LatLng(gps.location.getLatitude(), gps.location.getLongitude())));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(gps.location.getLatitude(), gps.location.getLongitude())));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(/*gps.location.getLatitude(), gps.location.getLongitude()*/10,10)));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(/*gps.location.getLatitude(), gps.location.getLongitude()*/10,10)));
     }
 
     @Override
