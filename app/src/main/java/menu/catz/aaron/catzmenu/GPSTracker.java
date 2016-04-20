@@ -18,8 +18,8 @@ import android.support.v4.app.ActivityCompat;
 
 public class GPSTracker extends Service implements LocationListener {
 
-    private final Context context;
-    private final MapsActivity map;
+    Context context;
+    private final Player player;
     Boolean isGPSEnables = false;
     Boolean isNetworkEnabled = false;
     Boolean canGetLocation = false;
@@ -28,10 +28,11 @@ public class GPSTracker extends Service implements LocationListener {
     private static long MIN_TIME_BW_UPDATES = 5000;
     protected LocationManager locationManager;
 
-    GPSTracker(Context _CONTEXT, MapsActivity _MAP) {
-        this.context = _CONTEXT;
-        this.map = _MAP;
+    GPSTracker(Context _CONTEXT, Player _PLAYER) {
+        context = _CONTEXT;
+        player = _PLAYER;
         getLocation();
+        player.updateLocation();
     }
 
     public Location getLocation() {
@@ -113,7 +114,7 @@ public class GPSTracker extends Service implements LocationListener {
                 }
             }
         }
-        this.map.update();
+        player.updateLocation();
     }
 
     @Override
@@ -135,10 +136,6 @@ public class GPSTracker extends Service implements LocationListener {
     @Override
     public IBinder onBind(Intent intent) {
         return null;
-    }
-
-    public Location update() {
-        return location;
     }
 }
 
